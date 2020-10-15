@@ -12,9 +12,13 @@ export default {
     },
 
     actions: {
-        async fetchGames({ commit }) {
-            const games = await HTTP.get('/games')
-            commit('setGames', games);
+        async fetchGames({ dispatch, commit }) {
+            return new Promise((resolve, reject) => {
+                HTTP.get('/games').then(res => {
+                    commit('setGames', res);
+                    resolve(res)
+                }, err => reject(err))
+            })
         }
     },
 };

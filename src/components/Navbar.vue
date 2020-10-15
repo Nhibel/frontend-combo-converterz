@@ -4,7 +4,7 @@
       <b-navbar-nav>
         <b-nav-item to="/">Home</b-nav-item>
         <b-nav-item v-if="connected" to="/characters">Characters</b-nav-item>
-        <b-nav-item v-if="connected" to="/admin">Admin</b-nav-item>
+        <!-- <b-nav-item v-if="connected" to="/admin">Admin</b-nav-item> -->
       </b-navbar-nav>
 
       <b-navbar-nav class="ml-auto" v-if="connected">

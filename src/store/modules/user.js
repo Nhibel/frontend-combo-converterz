@@ -19,12 +19,10 @@ const actions = {
       email: email
     })
       .then(resp => {
-        console.log('depuis user.js - then');
         // Récupération des données de l'user
         commit(USER_SUCCESS, resp);
       })
       .catch(() => {
-        console.log('depuis user.js - catch');
         commit(USER_ERROR);
         dispatch(AUTH_LOGOUT);
       });

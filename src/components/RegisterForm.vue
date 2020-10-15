@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="pb-3">
     <div>
       <h4>Register</h4>
     </div>
@@ -14,10 +14,7 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group
-        label-for="input-email"
-        description="We'll never share your email with anyone else."
-      >
+      <b-form-group label-for="input-email">
         <b-form-input
           id="input-email"
           v-model="email"
@@ -55,7 +52,7 @@
         ></b-form-input>
       </b-form-group>
 
-      <b-form-group
+      <!-- <b-form-group
         label="Is this an administrator account?"
         label-for="is-admin"
       >
@@ -63,7 +60,7 @@
           <option value="1">Yes</option>
           <option value="0">No</option>
         </b-form-select>
-      </b-form-group>
+      </b-form-group> -->
 
       <div v-if="error">
         <b-modal
@@ -102,10 +99,10 @@ import Password from 'vue-password-strength-meter';
 export default {
   data() {
     return {
-      name: 'Nhibel',
-      email: 'camilledevos@gmail.com',
-      password: 'B3rseker8671',
-      password_confirmation: 'B3rseker8671',
+      name: '',
+      email: '',
+      password: '',
+      password_confirmation: '',
       isAdmin: '0',
       error: false,
       placeholder: 'Le password doit comporter au moins 8 caractères',
@@ -115,7 +112,7 @@ export default {
       suggestions: '',
       warning: '',
       errorMessages: [],
-      modalShow: false,
+      modalShow: false
     };
   },
   methods: {
@@ -134,11 +131,11 @@ export default {
                   this.$router.push('/');
                 }
               })
-              .catch((error) => {
+              .catch(error => {
                 console.log(error);
               });
           })
-          .catch((error) => {
+          .catch(error => {
             this.errorMessages = [];
             this.error = true;
             this.modalShow = !this.modalShow;
@@ -176,16 +173,19 @@ export default {
     },
     eraseErrorMessage() {
       this.error = false;
-    },
+    }
   },
   components: {
-    Password,
-  },
+    Password
+  }
 };
 </script>
 
 <style lang="scss" scoped>
 .Password {
   max-width: 100%;
+}
+p {
+  color: yellow;
 }
 </style>

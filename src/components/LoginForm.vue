@@ -40,7 +40,7 @@ export default {
   data() {
     return {
       email: '',
-      password: '',
+      password: ''
     };
   },
   methods: {
@@ -48,18 +48,20 @@ export default {
       const { email, password } = this;
       this.$store
         .dispatch(AUTH_REQUEST, { email, password })
-        .then((res) => {
-          if (!res.data.user.isAdmin) {
-            this.$router.push('/');
-          } else {
-            this.$router.push('/admin');
-          }
+        .then(res => {
+          console.log('connected');
+          //this.$router.push('/');
+          // if (!res.data.user.isAdmin) {
+          //   this.$router.push('/');
+          // } else {
+          //   this.$router.push('/admin');
+          // }
         })
-        .catch((error) => {
+        .catch(error => {
           console.log('error');
         });
-    },
-  },
+    }
+  }
 };
 </script>
 

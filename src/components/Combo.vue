@@ -107,6 +107,7 @@ export default {
       var result = str
         .replaceAll('VANISH', 'vanish ')
         .replaceAll('DELAY', 'delay ')
+        .replaceAll('DL', 'delay ')
         .replaceAll('SD', 'super-dash ')
         .replaceAll('JC', 'jump-cancel ')
         .replaceAll('DR', 'dragon-rush ')

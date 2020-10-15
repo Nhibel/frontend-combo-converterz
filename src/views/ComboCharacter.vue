@@ -92,7 +92,7 @@
       </b-col>
     </b-row>
 
-    <div v-if="comboList" class="combo-container pr-3 pl-3">
+    <div v-if="comboList" class="combo-container pr-3 pl-3 pb-3">
       <div v-for="(combo, index) in comboList" :key="combo._id">
         <Combo
           :combo="combo"

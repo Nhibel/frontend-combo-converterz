@@ -106,8 +106,13 @@ export default {
   mounted() {
     this.$store
       .dispatch('fetchGames')
-      .then((this.games = this.$store.state.games.games.data))
-      .finally((this.games = this.sortObjectByParam(this.games, 'name')));
+      .then(res => {
+        this.games = this.sortObjectByParam(
+          this.$store.state.games.games.data,
+          'name'
+        );
+      })
+      .catch(err => console.log(err));
 
     if (this.$route.params.game != null) {
       this.gameId = this.$route.params.game;

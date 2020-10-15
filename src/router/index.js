@@ -17,24 +17,27 @@ const ifAuthenticated = (to, from, next) => {
   let user = JSON.parse(localStorage.getItem('user'));
   console.log('user', user);
   if (store.getters.isAuthenticated) {
+    console.log('isAthenticated')
     next();
     return;
+  } else {
+    console.log('y a un bug')
   }
   next('/');
 };
 
-const ifAuthenticatedAndAdmin = (to, from, next) => {
-  let user = JSON.parse(localStorage.getItem('user'));
+// const ifAuthenticatedAndAdmin = (to, from, next) => {
+//   let user = JSON.parse(localStorage.getItem('user'));
 
-  if (user != null) {
-    if (store.getters.isAuthenticated && user.isAdmin) {
-      next();
-      return;
-    }
-  }
+//   if (user != null) {
+//     if (store.getters.isAuthenticated && user.isAdmin) {
+//       next();
+//       return;
+//     }
+//   }
 
-  next('/');
-};
+//   next('/');
+// };
 
 const routes = [
   // {
@@ -95,13 +98,13 @@ const routes = [
       import(/* webpackChunkName: "settings" */ '../views/Settings.vue'),
     beforeEnter: ifAuthenticated
   },
-  {
-    path: '/admin',
-    name: 'Admin',
-    component: () =>
-      import(/* webpackChunkName: "admin" */ '../views/Admin.vue'),
-    beforeEnter: ifAuthenticatedAndAdmin
-  }
+  // {
+  //   path: '/admin',
+  //   name: 'Admin',
+  //   component: () =>
+  //     import(/* webpackChunkName: "admin" */ '../views/Admin.vue'),
+  //   beforeEnter: ifAuthenticatedAndAdmin
+  // }
 ];
 
 const router = new VueRouter({

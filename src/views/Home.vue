@@ -1,7 +1,5 @@
 <template>
   <div class="hello">
-    <h4>This is homepage</h4>
-
     <HomeConnected v-if="connected"></HomeConnected>
     <HomeNotConnected v-if="!connected"></HomeNotConnected>
   </div>
@@ -17,28 +15,28 @@ import HomeNotConnected from '@/components/HomeNotConnected.vue';
 export default {
   data() {
     return {
-      connected: false,
+      connected: false
     };
   },
   methods: {
     async toLogin() {
       await this.$router.push({ path: 'Login' });
-    },
+    }
   },
   components: {
     Login,
     HomeConnected,
-    HomeNotConnected,
+    HomeNotConnected
   },
   created() {
-    this.$store.watch((state) => {
+    this.$store.watch(state => {
       if (this.$store.getters.isAuthenticated) {
         this.connected = true;
       } else {
         this.connected = false;
       }
     });
-  },
+  }
 };
 </script>
 
