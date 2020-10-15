@@ -1,0 +1,21 @@
+body {
+  padding-top: 60px;
+  background-color: rgb(199, 199, 199);
+  background: url('/assets/img/body-background.webp') no-repeat center fixed;
+  background-size: cover;
+}
+
+h4 {
+  padding-top: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  color: rgb(0, 0, 0);
+  font-family: 'LEVIBRUSH', Helvetica, Arial;
+  font-size: 3em;
+  text-align: center;
+  //transform: rotate(359deg); /* Équivalent à rotateZ(45deg) */
+  background: -webkit-linear-gradient(top, rgb(48, 6, 7) 15%, #ba292e 50%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
