@@ -31,6 +31,7 @@ const actions = {
         password: user.password
       })
         .then(resp => {
+          console.log('la réponse de', resp)
           const token = resp.data.token;
           const refresh_token = resp.data.refresh_token;
           const user = resp.data.user;
@@ -46,6 +47,7 @@ const actions = {
         .catch(err => {
           commit(AUTH_ERROR, err);
           localStorage.removeItem('user-token');
+          localStorage.removeItem('refresh-token'); // store the refresh token in localstorage
           localStorage.removeItem('user');
           reject(err);
         });

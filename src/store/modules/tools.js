@@ -14,13 +14,16 @@ export default {
             return match && match[1].length == 11 ? match[1] : false;
           },
 
-        makeToast({commit}, {vm, variant, message}) {
+        makeToast({commit}, {vm, variant, message, position}) {
+          if (position == '' || position == undefined) {
+            position = 'b-toaster-bottom-full'
+          }
         vm.$bvToast.toast(message, {
           title: 'Information',
           variant: variant,
           solid: false,
           autoHideDelay: 3000,
-          toaster: 'b-toaster-bottom-full'
+          toaster: position
         })
       }
     }

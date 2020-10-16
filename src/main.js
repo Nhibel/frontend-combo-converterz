@@ -38,19 +38,24 @@ HTTP.interceptors.response.use(
     if (error.response.status === 401) {
       console.log('the error response status is:', error.response.status);
 
-      const user = localStorage.getItem('user');
-      const refreshToken = localStorage.getItem('refresh-token');
-      store
-        .dispatch('verifyToken', { user: user, refreshToken: refreshToken })
-        .then(resp => {
-          if (resp.status == 401) {
-            store.dispatch(AUTH_LOGOUT).then(() => {
-              router.push('/');
-            });
-          } else {
-            router.next();
-          }
-        });
+      if (localStorage.getItem('user') && localStorage.getItem('refresh-token')) {
+        const user = localStorage.getItem('user');
+        const refreshToken = localStorage.getItem('refresh-token');
+        store
+          .dispatch('verifyToken', { user: user, refreshToken: refreshToken })
+          .then(resp => {
+            if (resp.status == 401) {
+              store.dispatch(AUTH_LOGOUT).then(() => {
+                router.push('/');
+              });
+            } else {
+              router.next();
+            }
+          });
+      }else {
+        return Promise.reject(error);
+      }
+      
     } else {
       return Promise.reject(error);
     }

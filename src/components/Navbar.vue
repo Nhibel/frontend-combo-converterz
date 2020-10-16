@@ -1,24 +1,34 @@
 <template>
   <div>
-    <b-navbar type="light" fixed="top">
-      <b-navbar-nav>
-        <b-nav-item to="/">Home</b-nav-item>
-        <b-nav-item v-if="connected" to="/characters">Characters</b-nav-item>
-        <!-- <b-nav-item v-if="connected" to="/admin">Admin</b-nav-item> -->
-      </b-navbar-nav>
+    <!--  -->
 
-      <b-navbar-nav class="ml-auto" v-if="connected">
-        <b-nav-form>
-          <b-button size="sm" class="my-2 my-sm-0" @click="logout"
-            >Déconnexion</b-button
-          >
-        </b-nav-form>
-      </b-navbar-nav>
+    <b-navbar toggleable="sm" type="light">
+      <div class="container-fluid">
+        <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
-      <b-navbar-nav class="ml-auto" v-if="!connected">
-        <LoginForm></LoginForm>
-      </b-navbar-nav>
+        <b-collapse id="nav-collapse" is-nav>
+          <b-navbar-nav>
+            <b-nav-item to="/">Home</b-nav-item>
+            <b-nav-item v-if="connected" to="/characters"
+              >Characters</b-nav-item
+            >
+          </b-navbar-nav>
+
+          <b-navbar-nav class="ml-auto" v-if="connected">
+            <b-nav-form>
+              <b-button size="sm" class="my-2 my-sm-0" @click="logout"
+                >Déconnexion</b-button
+              >
+            </b-nav-form>
+          </b-navbar-nav>
+
+          <div class="ml-auto" v-if="!connected">
+            <LoginForm></LoginForm>
+          </div>
+        </b-collapse>
+      </div>
     </b-navbar>
+    <!-- <b-nav-item v-if="connected" to="/admin">Admin</b-nav-item> -->
   </div>
 </template>
 

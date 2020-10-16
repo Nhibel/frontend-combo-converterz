@@ -6,6 +6,7 @@ import store from '@/store'; // your vuex store
 Vue.use(VueRouter);
 
 const ifNotAuthenticated = (to, from, next) => {
+  console.log('ifNotAuthenticated')
   if (!store.getters.isAuthenticated) {
     next();
     return;
@@ -14,8 +15,8 @@ const ifNotAuthenticated = (to, from, next) => {
 };
 
 const ifAuthenticated = (to, from, next) => {
+  console.log('ifAuthenticated')
   let user = JSON.parse(localStorage.getItem('user'));
-  console.log('user', user);
   if (store.getters.isAuthenticated) {
     console.log('isAthenticated')
     next();
@@ -23,6 +24,7 @@ const ifAuthenticated = (to, from, next) => {
   } else {
     console.log('y a un bug')
   }
+  console.log('ifauthenticatd 2')
   next('/');
 };
 

@@ -7,13 +7,16 @@
         Sur Youtube, y a plein de vidéos pour bosser ses combos, mais les
         indications sont sous un format particulier.
       </p>
-      <iframe
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/qLMCrNNQkc8?start=58"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      ></iframe>
+      <div class="embed-responsive embed-responsive-21by9">
+        <iframe
+          class="embed-responsive-item"
+          width="560"
+          height="315"
+          src="https://www.youtube.com/embed/qLMCrNNQkc8?start=58"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        ></iframe>
+      </div>
       <p>
         Genre pour le combo au dessus :
         <span class="font-weight-bold"
@@ -32,7 +35,11 @@
         Sur cette appli, on peut copier/coller le combo ci-dessus, et ça donne
         ça :
       </p>
-      <img src="/assets/img/exemple_combo_img.png" alt="combo en image" />
+      <b-img
+        src="/assets/img/exemple_combo_img.png"
+        alt="combo en image"
+        fluid
+      ></b-img>
       <p>Perso ça me parle plus</p>
       <p>Voilà voilà</p>
     </div>
