@@ -30,5 +30,7 @@ export default {
   padding-right: 35px;
   padding-left: 35px;
   min-height: 150px;
+  padding-bottom: 1px;
+  margin-bottom: 15px;
 }
 </style>

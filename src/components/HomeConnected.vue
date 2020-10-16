@@ -1,6 +1,10 @@
 <template>
   <div>
-    <h4>Coucou {{ user.name }} {{ message }}</h4>
+    <b-row class="mb-2 mt-3">
+      <b-col>
+        <h4>Coucou {{ user.name }} {{ message }}</h4>
+      </b-col>
+    </b-row>
     <div class="text-center text-white pb-2">
       <h5 class="pb-2">C'est quoi ce site de merde ?</h5>
       <p>

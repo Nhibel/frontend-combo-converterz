@@ -104,31 +104,41 @@ export default {
     strNumericalToBtnArray(str) {
       str = str.toUpperCase();
 
-      var result = str
-        .replaceAll('VANISH', 'vanish ')
-        .replaceAll('DELAY', 'delay ')
-        .replaceAll('DL', 'delay ')
-        .replaceAll('SD', 'super-dash ')
-        .replaceAll('JC', 'jump-cancel ')
-        .replaceAll('DR', 'dragon-rush ')
-        .replaceAll('A1', 'assist-one ')
-        .replaceAll('A2', 'assist-two ')
-        .replaceAll('1', 'bottom-left ')
-        .replaceAll('2', 'bottom ')
-        .replaceAll('3', 'bottom-right ')
-        .replaceAll('4', 'left ')
-        .replaceAll('5', 'neutral ')
-        .replaceAll('6', 'right ')
-        .replaceAll('7', 'top-left ')
-        .replaceAll('8', 'top ')
-        .replaceAll('9', 'top-right ')
-        .replaceAll('L', 'light ')
-        .replaceAll('M', 'medium ')
-        .replaceAll('H', 'high ')
-        .replaceAll('S', 'super ')
-        .replaceAll('J', 'jump ');
+      // var result = str
+      //   .replaceAll('236', 'bottom-to-right ')
+      //   .replaceAll('QCF', 'bottom-to-right ')
+      //   .replaceAll('214', 'bottom-to-left ')
+      //   .replaceAll('QCB', 'bottom-to-left ')
+      //   .replaceAll('VANISH', 'vanish ')
+      //   .replaceAll('DELAY', 'delay ')
+      //   .replaceAll('DL', 'delay ')
+      //   .replaceAll('SD', 'super-dash ')
+      //   .replaceAll('JC', 'jump-cancel ')
+      //   .replaceAll('DR', 'dragon-rush ')
+      //   .replaceAll('A1', 'assist-one ')
+      //   .replaceAll('A2', 'assist-two ')
+      //   .replaceAll('1', 'bottom-left ')
+      //   .replaceAll('2', 'bottom ')
+      //   .replaceAll('3', 'bottom-right ')
+      //   .replaceAll('4', 'left ')
+      //   .replaceAll('5', 'neutral ')
+      //   .replaceAll('6', 'right ')
+      //   .replaceAll('7', 'top-left ')
+      //   .replaceAll('8', 'top ')
+      //   .replaceAll('9', 'top-right ')
+      //   .replaceAll('L', 'light ')
+      //   .replaceAll('M', 'medium ')
+      //   .replaceAll('H', 'high ')
+      //   .replaceAll('S', 'super ')
+      //   .replaceAll('J', 'jump ');
 
-      result = result.split(' ').filter(item => item);
+      var result = str
+        .replaceAll(/236/gi, '236 ')
+        .replaceAll(/2/gi, 'bottom ')
+        .replaceAll(/3/gi, 'bottom-right ')
+        .replaceAll(/6/gi, 'right ');
+
+      result = result.split(' ');
       return result;
     },
 

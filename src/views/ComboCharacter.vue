@@ -1,13 +1,72 @@
 <template>
   <div>
-    <b-button
+    <b-row
+      class="mb-2 mt-3"
+      align-v="center"
+      cols="1"
+      cols-sm="1"
+      cols-md="3"
+      align-h="center"
+    >
+      <b-col class="text-md-left text-center mt-2 mt-md-0 "
+        ><b-button textvariant="primary" class="goback-btn" @click="goBack">
+          retour
+        </b-button>
+      </b-col>
+      <b-col>
+        <h4>
+          {{ character.name }}
+        </h4>
+      </b-col>
+      <b-col class="mb-2 mb-md-0">
+        <div class="controllers-container">
+          <b-row class="mt-0 m-0 ">
+            <b-col
+              class="d-inline-flex justify-content-center justify-content-md-end text-center pr-0 controllers-col"
+            >
+              <b-form-group
+                :checked="platform"
+                @change="forceRerender"
+                class="controller-selector rounded pl-2 pr-2 pt-2 mb-0"
+              >
+                <input
+                  id="psx"
+                  type="radio"
+                  name="controller"
+                  value="psx_buttons"
+                  v-model="platform"
+                />
+                <label
+                  style="background-image: url(/assets/controllers/psx.png)"
+                  class="platform-controller psx"
+                  for="psx"
+                ></label>
+                <input
+                  id="xbox"
+                  type="radio"
+                  name="controller"
+                  value="xbox_buttons"
+                  v-model="platform"
+                />
+                <label
+                  style="background-image: url(/assets/controllers/xbox.png)"
+                  class="platform-controller xbox"
+                  for="xbox"
+                ></label>
+              </b-form-group>
+            </b-col>
+          </b-row></div
+      ></b-col>
+    </b-row>
+
+    <!-- <b-button
       variant="primary"
       class="mb-3 mt-3 goback-btn fixed"
       @click="goBack"
       >retour</b-button
-    >
+    > -->
 
-    <div class="controllers-container mt-3">
+    <!-- <div class="controllers-container mt-3">
       <b-row class="mt-0 m-0">
         <b-col
           class="d-inline-flex justify-content-end text-center pr-0 controllers-col"
@@ -44,9 +103,9 @@
           </b-form-group>
         </b-col>
       </b-row>
-    </div>
+    </div> -->
 
-    <h4>{{ character.name }}</h4>
+    <!-- <h4>{{ character.name }}</h4> -->
 
     <b-row class="bg-dark p-2">
       <b-col xs="12" sm="9" md="10" class=" mb-sm-0 p-2 pr-3">
@@ -262,14 +321,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-h4 {
-  margin-top: 0px;
-  padding-top: 0px;
-  margin-bottom: 0px;
-}
+// h4 {
+//   padding-top: 0;
+// }
 .goback-btn {
   z-index: 2;
-  position: absolute;
 }
 
 .controller-buttons img {
@@ -300,7 +356,7 @@ h4 {
 }
 
 .controllers-col {
-  margin-right: -15px;
+  margin-right: 0px;
 }
 
 .platform-controller,

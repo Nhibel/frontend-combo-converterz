@@ -1,7 +1,11 @@
 <template>
   <div>
     <div class="text-center text-white pb-2">
-      <h4>Ouais salut</h4>
+      <b-row class="mb-2 mt-3">
+        <b-col>
+          <h4>Ouais salut</h4>
+        </b-col>
+      </b-row>
       <h5 class="pb-2">C'est quoi ce site de merde ?</h5>
       <p>
         Sur Youtube, y a plein de vidéos pour bosser ses combos, mais les

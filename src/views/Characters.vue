@@ -1,6 +1,10 @@
 <template>
   <div>
-    <h4>Choisis un jeu puis ton perso</h4>
+    <b-row class="mb-2 mt-3">
+      <b-col>
+        <h4>Choisis un jeu puis ton perso</h4>
+      </b-col>
+    </b-row>
 
     <!-- ////////////////////////////////////// -->
 
@@ -15,7 +19,7 @@
 
     <!-- characters list ////////////////////////// -->
 
-    <b-row v-if="gameId" class="text-center bg-dark p-3 rounded m-0">
+    <b-row v-if="gameId" class="text-center bg-dark p-3 rounded m-0 mb-5">
       <b-col
         lg="2"
         md="2"
