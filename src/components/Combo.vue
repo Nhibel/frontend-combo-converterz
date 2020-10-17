@@ -131,7 +131,11 @@ export default {
         .replaceAll('H', 'high ')
         .replaceAll('S', 'super ')
         .replaceAll('J', 'jump ');
-      result = result.split(' ');
+      result = result.split(' ').filter(e => {
+        return e != '';
+      });
+      console.log(result);
+
       return result;
     },
 
@@ -219,7 +223,9 @@ export default {
   },
   computed: {},
   mounted() {
+    console.log('this.combo.manipulation : ', this.combo.manipulation);
     this.buttons = this.strNumericalToBtnArray(this.combo.manipulation);
+    console.log('this.buttons : ', this.buttons);
     this.manipulation = this.combo.manipulation;
 
     if (this.combo.youtubeId) {
