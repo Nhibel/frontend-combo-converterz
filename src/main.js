@@ -13,6 +13,8 @@ import { AUTH_LOGOUT } from '@/store/actions/auth';
 
 import './assets/custom.scss';
 
+import VueYoutube from 'vue-youtube'
+
 // Install BootstrapVue
 Vue.use(BootstrapVue);
 // Optionally install the BootstrapVue icon components plugin
@@ -21,6 +23,8 @@ Vue.use(IconsPlugin);
 Vue.use(VueLazyload, {
   lazyComponent: true
 });
+
+Vue.use(VueYoutube)
 
 Vue.config.productionTip = false;
 

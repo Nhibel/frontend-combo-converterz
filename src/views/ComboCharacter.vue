@@ -138,7 +138,7 @@
         xs="12"
         sm="3"
         md="2"
-        class="pr-3 pl-2 pl-sm-2 pt-2 pb-2 pt-sm-2 pb-sm-2"
+        class="pt-2 pl-2 pr-3  pb-2 pl-sm-2 pt-sm-2 pb-sm-2"
       >
         <b-button
           variant="primary"

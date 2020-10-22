@@ -2,18 +2,120 @@
   <div>
     <hr v-if="index > 0" class="divider" />
     <b-card no-body class="overflow-hidden mt-3">
-      <div v-if="!modify">
-        <div md="4" v-if="combo.youtubeId">
-          <lazy-component @show="handler">
-            <b-embed
-              type="iframe"
-              aspect="16by9"
-              :src="youtubeLink"
-              allowfullscreen
-              controls
-              crossorigin="anonymous"
-            ></b-embed>
-          </lazy-component>
+      <div v-show="!modify">
+        <div md="4" v-if="combo.youtubeId" class="bg-secondary pb-2">
+          <!-- <lazy-component @show="handler"> -->
+          <youtube
+            :key="componentKey"
+            :video-id="videoId"
+            ref="youtube"
+            :player-vars="playerVars"
+            width="100%"
+            :height="height"
+            @playing="initialize()"
+            @paused="videoPaused()"
+          ></youtube>
+          <b-form-input
+            id="range-1"
+            v-model="rangeValue"
+            type="range"
+            min="0"
+            max="100"
+            @change="changeVideoPosition()"
+            step="0.1"
+          ></b-form-input>
+
+          <b-row>
+            <b-col
+              class="text-right text-md-center mb-md-0 mt-2 order-12 order-md-1"
+              ><b-button size="sm" variant="primary" @click="modifyCombo"
+                >Modifier</b-button
+              ></b-col
+            >
+            <b-col class="text-center order-2" xs="12" sm="12" md="6">
+              <b-button-group class="text-center" size="sm">
+                <b-button @click="restartCombo" class="bg-dark border-dark">
+                  <b-icon
+                    icon="arrow-clockwise"
+                    variant="secondary"
+                    aria-label="restart combo"
+                  ></b-icon>
+                </b-button>
+
+                <b-button
+                  v-if="!playingState"
+                  @click="playVideo"
+                  class="bg-dark border-dark"
+                >
+                  <b-icon
+                    icon="play-fill"
+                    variant="secondary"
+                    aria-label="Play"
+                  >
+                  </b-icon>
+                </b-button>
+
+                <b-button
+                  v-if="playingState"
+                  @click="pauseVideo"
+                  class="bg-dark border-dark"
+                >
+                  <b-icon
+                    icon="pause-fill"
+                    variant="secondary"
+                    aria-label="Pause"
+                  ></b-icon>
+                </b-button>
+
+                <b-button
+                  v-if="!muteState"
+                  @click="muteVolume"
+                  class="bg-dark border-dark"
+                >
+                  <b-icon
+                    icon="volume-up-fill"
+                    variant="secondary"
+                    aria-label="unMute volume"
+                  ></b-icon
+                ></b-button>
+
+                <b-button
+                  v-if="muteState"
+                  @click="unMuteVolume"
+                  class="bg-dark border-dark"
+                >
+                  <b-icon
+                    icon="volume-mute-fill"
+                    variant="secondary"
+                    aria-label="Mute volume"
+                  ></b-icon
+                ></b-button>
+
+                <b-button class="bg-dark border-dark">
+                  <b-form-select
+                    v-model="speed"
+                    @change="changeSpeed"
+                    class="bg-dark pr-0"
+                    size="sm"
+                  >
+                    <option value="default" disabled hidden>Speed</option>
+                    <option value="0.25">speed x0.25</option>
+                    <option value="0.5">speed x0.50</option>
+                    <option value="1">speed x1</option>
+                  </b-form-select>
+                </b-button>
+              </b-button-group>
+            </b-col>
+            <b-col
+              class="text-left text-md-center mt-md-0 mt-2 order-12 order-md-3"
+            >
+              <b-button variant="danger" size="sm" @click="deleteCombo"
+                >Supprimer</b-button
+              >
+            </b-col>
+          </b-row>
+
+          <!-- </lazy-component> -->
         </div>
 
         <div>
@@ -27,21 +129,11 @@
               </span>
               <br />
             </b-card-text>
-            <b-button
-              size="sm"
-              variant="primary"
-              class="mr-2"
-              @click="modifyCombo"
-              >Modifier</b-button
-            >
-            <b-button variant="danger" size="sm" @click="deleteCombo"
-              >supprimer</b-button
-            >
           </b-card-body>
         </div>
       </div>
 
-      <b-form @submit.prevent v-else class="modify-combo-container">
+      <b-form @submit.prevent v-show="modify" class="modify-combo-container">
         <b-form-input
           size="sm"
           type="text"
@@ -75,18 +167,104 @@
 export default {
   data() {
     return {
+      componentKey: 0,
       buttons: [],
       ytId: '',
       ytTimestamp: '',
       manipulation: '',
       modify: false,
-      youtubeLink: ''
+      youtubeLink: '',
+      videoId: this.combo.youtubeId,
+      playerVars: {
+        start: this.combo.youtubeTimeStamp,
+        controls: 0
+      },
+      player: [],
+      playingState: 0,
+      muteState: 0,
+      speedState: 1,
+      rangeValue: 0,
+      time_update_interval: '',
+      speed: 'default',
+      height: ''
     };
   },
   methods: {
     handler() {
       console.log('loaded');
     },
+
+    // Start Youtube Player controls //
+
+    async initialize() {
+      this.playingState = 1;
+      //this.updateProgressBar();
+
+      // Clear any old interval.
+      //clearInterval(this.time_update_interval);
+
+      // Start interval to update elapsed time display and
+      // the elapsed part of the progress bar every second.
+      this.time_update_interval = setInterval(() => {
+        this.updateProgressBar();
+      }, 1000);
+    },
+
+    async updateProgressBar() {
+      this.rangeValue =
+        ((await this.player.getCurrentTime()) /
+          (await this.player.getDuration())) *
+        100;
+    },
+
+    // Change video position based on the range bar
+    async changeVideoPosition() {
+      var newTime = (await this.player.getDuration()) * (this.rangeValue / 100);
+      this.player.seekTo(newTime);
+    },
+
+    videoPaused() {
+      this.playingState = !this.playingState;
+      clearInterval(this.time_update_interval);
+    },
+
+    restartCombo() {
+      this.player.seekTo(this.combo.youtubeTimeStamp);
+    },
+
+    async playVideo() {
+      this.initialize();
+      await this.player.playVideo();
+    },
+
+    async pauseVideo() {
+      this.playingState = 1;
+      await this.player.pauseVideo();
+    },
+
+    async muteVolume() {
+      this.muteState = !this.muteState;
+      await this.player.mute();
+    },
+
+    async unMuteVolume() {
+      this.muteState = !this.muteState;
+      await this.player.unMute();
+    },
+
+    async changeSpeed() {
+      console.log(this.speed);
+      var speed = parseFloat(this.speed);
+      await this.player.setPlaybackRate(speed);
+    },
+
+    async initializeRange() {
+      console.log(await this.player.getDuration());
+      this.rangeValue =
+        (this.combo.youtubeTimeStamp / (await this.player.getDuration())) * 100;
+    },
+
+    // End Youtube Player controls //
 
     async deleteCombo() {
       await this.$store
@@ -98,6 +276,7 @@ export default {
 
     // faire apparaître / disparaître la modif combo
     modifyCombo() {
+      this.player.pauseVideo();
       this.modify = !this.modify;
     },
 
@@ -134,8 +313,6 @@ export default {
       result = result.split(' ').filter(e => {
         return e != '';
       });
-      console.log(result);
-
       return result;
     },
 
@@ -191,6 +368,9 @@ export default {
                 this.combo.youtubeTimeStamp
               );
             }
+            this.videoId = this.combo.youtubeId;
+            this.playerVars.start = this.combo.youtubeTimeStamp;
+            this.player.seekTo(this.combo.youtubeTimeStamp);
             this.modifyCombo();
           } else {
             this.$store.dispatch('makeToast', {
@@ -201,6 +381,23 @@ export default {
           }
         });
       }
+    },
+
+    changeHeight() {
+      const screenWidth = window.innerWidth;
+      if (screenWidth >= 1200) {
+        this.height = '600px';
+      } else if (screenWidth >= 992) {
+        this.height = '500px';
+      } else if (screenWidth >= 768) {
+        this.height = '400px';
+      } else if (screenWidth >= 576) {
+        this.height = '300px';
+      } else if (screenWidth < 576) {
+        this.height = '180px';
+      }
+
+      console.log(this.height);
     },
 
     getYoutubeLink(ytId, timestamp) {
@@ -221,19 +418,32 @@ export default {
       default: 0
     }
   },
-  computed: {},
+  computed: {
+    // player() {
+    //   return this.$refs.youtube.player;
+    // }
+  },
+  components: {},
   mounted() {
-    console.log('this.combo.manipulation : ', this.combo.manipulation);
     this.buttons = this.strNumericalToBtnArray(this.combo.manipulation);
-    console.log('this.buttons : ', this.buttons);
     this.manipulation = this.combo.manipulation;
 
     if (this.combo.youtubeId) {
+      this.player = this.$refs.youtube.player;
+      this.initializeRange();
+
       this.youtubeLink = this.getYoutubeLink(
         this.combo.youtubeId,
         this.combo.youtubeTimeStamp
       );
     }
+
+    this.changeHeight();
+    window.addEventListener('resize', this.changeHeight);
+  },
+  beforeDestroy() {
+    window.removeEventListener('resize', this.changeHeight);
+    clearInterval(this.time_update_interval);
   }
 };
 </script>
@@ -255,5 +465,9 @@ export default {
   color: white;
   border-style: solid none;
   border-width: 0.5px 0;
+}
+
+.custom-select {
+  color: lightgray;
 }
 </style>
