@@ -65,20 +65,26 @@ const actions = {
   },
 
   async verifyToken({ dispatch }, data) {
+    return new Promise((resolve, reject) => {
+      HTTP.grant_type = 'refresh_token';
 
-    HTTP.grant_type = 'refresh_token';
-    HTTP.post('/auth/verify-token', {
-      token: data.refreshToken,
-      user: data.user
-    })
-      .then(resp => {
-        const token = resp.data.token;
-        const refresh_token = resp.data.refresh_token;
-        localStorage.setItem('user-token', token); // store the token in localstorage
-        localStorage.setItem('refresh-token', refresh_token); // store the refresh token in localstorage
-        HTTP.defaults.headers.common['Authorization'] = token;
+      HTTP.post('/auth/verify-token', {
+        token: data.refreshToken,
+        user: data.user
       })
-      .catch(err => console.log('erreur :', err.data));
+        .then(resp => {
+          const token = resp.data.token;
+          const refresh_token = resp.data.refresh_token;
+          localStorage.setItem('user-token', token); // store the token in localstorage
+          localStorage.setItem('refresh-token', refresh_token); // store the refresh token in localstorage
+          HTTP.defaults.headers.common['Authorization'] = token;
+          console.log('resp dans auth store', resp)
+          resolve(resp)
+        },
+        error => {
+          console.log('error dans auth store', error)
+          reject(error)})
+    })
   }
 };
 

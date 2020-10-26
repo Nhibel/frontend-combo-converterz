@@ -24,9 +24,12 @@ const actions = {
     return new Promise((resolve, reject) => {
       commit(REGISTER_REQUEST);
       let url = '/auth/signup';
-      if (user.isAdmin != null || user.isAdmin == 1) {
+      console.log('user : ', user)
+      if (user.isAdmin != 0 && user.isAdmin != null || user.isAdmin == 1) {
+        console.log('dans le auth/isAdmin')
         url = '/auth/signup-admin';
       }
+      console.log('url : ', url)
       HTTP.post(url, {
         name: user.name,
         email: user.email,
@@ -39,10 +42,6 @@ const actions = {
 
           localStorage.setItem('user', JSON.stringify(response.data.user));
           localStorage.setItem('user-token', token);
-
-          const email = user.email;
-          const password = user.password;
-          console.log(email, password);
 
           commit(REGISTER_SUCCESS, token);
           // dispatch(AUTH_REQUEST, { email, password });

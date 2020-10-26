@@ -120,13 +120,16 @@
 
         <div>
           <b-card-body class="text-center">
-            <b-card-text class="controller-buttons">
-              <span v-for="(button, index) in buttons" :key="index">
-                <img
+            <b-card-text
+              class="controller-buttons d-flex flex-wrap justify-content-center"
+            >
+              <div v-for="(button, index) in buttons" :key="index">
+                <b-img
+                  fluid
                   :src="'/assets/' + platform + '/' + button + '.png'"
                   alt=""
-                />
-              </span>
+                ></b-img>
+              </div>
               <br />
             </b-card-text>
           </b-card-body>
@@ -449,10 +452,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.controller-buttons img {
-  height: 40px;
-}
-
 .modify-combo-container {
   padding: 1.25rem;
 }
@@ -469,5 +468,34 @@ export default {
 
 .custom-select {
   color: lightgray;
+}
+
+.controller-buttons img {
+  width: 25px;
+  height: 25px;
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+  .controller-buttons img {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+  .controller-buttons img {
+    width: 35px;
+    height: 35px;
+  }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  .controller-buttons img {
+    width: 40px;
+    height: 40px;
+  }
 }
 </style>

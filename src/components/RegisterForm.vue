@@ -103,7 +103,7 @@ export default {
       email: '',
       password: '',
       password_confirmation: '',
-      isAdmin: '0',
+      isAdmin: 0,
       error: false,
       placeholder: 'Le password doit comporter au moins 8 caractères',
       showButton: '',

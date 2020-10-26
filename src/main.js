@@ -35,12 +35,14 @@ if (token) {
 
 HTTP.interceptors.response.use(
   response => {
+    console.log('1 : ', response)
     console.log('the response status is:', response.status);
     return response;
   },
   error => {
     if (error.response.status === 401) {
       console.log('the error response status is:', error.response.status);
+      console.log('the error response status is:', error);
 
       if (localStorage.getItem('user') && localStorage.getItem('refresh-token')) {
         const user = localStorage.getItem('user');
@@ -53,7 +55,8 @@ HTTP.interceptors.response.use(
                 router.push('/');
               });
             } else {
-              router.next();
+              console.log('dans error de l\'interceptor : ', error.response)
+              router.push(error.config.url);
             }
           });
       }else {
