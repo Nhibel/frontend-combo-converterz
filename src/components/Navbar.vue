@@ -1,7 +1,5 @@
 <template>
   <div>
-    <!--  -->
-
     <b-navbar toggleable="sm" type="light">
       <div class="container-fluid">
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -29,22 +27,15 @@
           </div>
         </b-collapse>
 
-        <!-- <b-form v-if="connected" class="ml-3 text-right">
-          <b-form-input
-            size="sm"
-            type="text"
-            v-model="keywords"
-            class="form-control input-lg"
-            list="somethingelse"
-          >
-          </b-form-input>
-
-          <b-dropdown id="dropdown-1" text="Dropdown Button" class="m-md-2">
-            <b-dropdown-item v-for="(res, index) in results" :key="index">{{
-              res.name
-            }}</b-dropdown-item>
-          </b-dropdown>          
-        </b-form> -->
+        <vue-typeahead-bootstrap
+          size="sm"
+          placeholder="Chercher un perso"
+          class="ml-4"
+          v-model="inputValue"
+          :data="results"
+          :serializer="item => item.name"
+          @hit="navigateToCharacter($event)"
+        />
       </div>
     </b-navbar>
   </div>
@@ -54,13 +45,15 @@
 import { HTTP } from '@/http-constants';
 import { AUTH_LOGOUT } from '@/store/actions/auth';
 import LoginForm from '@/components/LoginForm.vue';
-import _ from 'lodash';
+import VueTypeaheadBootstrap from 'vue-typeahead-bootstrap';
+import 'bootstrap/scss/bootstrap.scss';
 export default {
   data() {
     return {
       connected: false,
-      keywords: '',
-      results: []
+      inputValue: '',
+      results: [],
+      charactersLoaded: false
     };
   },
   methods: {
@@ -69,30 +62,16 @@ export default {
         this.$router.push('/');
       });
     },
-    searchAfterDebounce: _.debounce(function() {
-      this.search();
-    }, 500),
-
-    search() {
-      if (this.keywords.length > 1) {
-        HTTP.get('/characters/search/' + this.keywords).then(
-          response => {
-            console.log('response : ', response);
-            this.results = response.data;
-          },
-          error => {
-            console.log(error);
-          }
-        );
+    navigateToCharacter(e) {
+      if (this.$route.path != '/characters/' + e._id) {
+        this.$router.push({ name: 'ComboCharacter', params: { id: e._id } });
       }
+      this.inputValue = '';
     }
   },
-  watch: {
-    keywords: function(val) {
-      this.searchAfterDebounce();
-    }
-  },
-  created() {
+
+  mounted() {
+    console.log(this.$route);
     this.$store.watch(state => {
       if (this.$store.getters.isAuthenticated) {
         this.connected = true;
@@ -100,9 +79,21 @@ export default {
         this.connected = false;
       }
     });
+
+    HTTP.get('/characters').then(
+      res => {
+        this.results = res.data.characters;
+        this.charactersLoaded = true;
+        console.log(this.results);
+      },
+      error => {
+        alert(error);
+      }
+    );
   },
   components: {
-    LoginForm
+    LoginForm,
+    VueTypeaheadBootstrap
   }
 };
 </script>

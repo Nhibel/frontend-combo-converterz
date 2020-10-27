@@ -56,7 +56,7 @@ HTTP.interceptors.response.use(
               });
             } else {
               console.log('dans error de l\'interceptor : ', error.response)
-              router.push(error.config.url);
+              router.push(this.$router.currentRoute);
             }
           });
       }else {

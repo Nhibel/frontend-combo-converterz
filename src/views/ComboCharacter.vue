@@ -205,8 +205,7 @@ export default {
           this.getCombos();
         })
         .catch(err => {
-          alert('Erreur lors de la récupération des données');
-          console.log(err);
+          this.$router.push('/Characters');
         });
     },
 
