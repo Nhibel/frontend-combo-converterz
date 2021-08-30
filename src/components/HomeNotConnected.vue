@@ -6,7 +6,7 @@
           <h4>Ouais salut</h4>
         </b-col>
       </b-row>
-      <h5 class="pb-2">C'est quoi ce site de merde ?</h5>
+      <h5 class="pb-2">C'est quoi ce site ?</h5>
       <p>
         Sur Youtube, y a plein de vidéos pour bosser ses combos, mais les
         indications sont sous un format particulier.
@@ -34,7 +34,7 @@
       <p>
         L c'est pour coup léger (carré sur psx), S pour X, et ainsi de suite...
       </p>
-      <p>Mais moi je trouve pas ça lisible et j'ai la flemme de m'adapter..</p>
+      <p>Mais moi je trouve pas ça lisible, alors j'ai essayé de faire un truc à ma façon</p>
       <p>
         Sur cette appli, on peut copier/coller le combo ci-dessus, et ça donne
         ça :
